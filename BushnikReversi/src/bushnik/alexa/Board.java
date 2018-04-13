@@ -4,7 +4,7 @@ public class Board {
 	private String [][] board;
 	private int rows;
 	private int cols;
-	
+	//board
 	public Board(int aRows, int aCols) {
 		board = new String[aRows][aCols];
 		rows = aRows;
