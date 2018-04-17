@@ -13,29 +13,25 @@ public class Board {
 	board[4][3] = CellState.BLACK;
 	board[3][4] = CellState.BLACK;
 	board[4][4] = CellState.WHITE;
-	
-	
-	//board hello
-	/*
-	public Board(int aRows, int aCols) {
-		board = new String[aRows][aCols];
-		rows = aRows;
-		cols = aCols;
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				System.out.print("A");
-			}
-		}
+
+	}
+	public boolean isEmpty (int row, int col){
+		return board[row][col] == CellState.EMPTY;
+	}
+	public boolean isWhite (int row, int col){
+		
+		
+		
+		return board[row][col] == CellState.WHITE;
+	}
+	public boolean isBlack (int row, int col){
+		
+		
+		
+		return board[row][col] == CellState.BLACK;
+	}
+	public boolean isValid(int row, int col){
+		return (row >= 0 && row < 7) && (col >= 0 && col < 7);
 	}
 
-	String board [][] = new String [8][8];{
-	
-	
-	for (int row = 0; row < 8; row ++){
-		for (int col = 0; col < 8; col++){
-			System.out.print("A");
-		}
-	}
-	*/
-}
 }
