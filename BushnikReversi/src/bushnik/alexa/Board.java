@@ -1,20 +1,25 @@
 package bushnik.alexa;
 
 public class Board {
-	private CellState [][] board = new CellState [8][8];{
+	private CellState [][] board;
+		private int cols;
+		private int rows;
 	
-	for(int row = 0; row < 8; row++){
-		for (int col = 0; col < 8; col++){
-			board[row][col] = CellState.EMPTY;
+		public Board(int Rows, int Cols){
+			board = new CellState[Rows][Cols];
+			rows = Rows;
+			cols = Cols;
+			for (int i = 0; i < rows; i++) {
+				for (int j = 0; j < cols; j++) {
+					board[i][j] = CellState.EMPTY;
+				}
+			}
+			board[3][3] = CellState.WHITE;
+			board[4][3] = CellState.BLACK;
+			board[3][4] = CellState.BLACK;
+			board[4][4] = CellState.WHITE;
 		}
-	}
 	
-	board[3][3] = CellState.WHITE;
-	board[4][3] = CellState.BLACK;
-	board[3][4] = CellState.BLACK;
-	board[4][4] = CellState.WHITE;
-
-	}
 	public boolean isEmpty (int row, int col){
 		return board[row][col] == CellState.EMPTY;
 	}

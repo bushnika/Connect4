@@ -5,14 +5,14 @@ public class Driver {
 
 	public static void main(String[] args) {
 		
-		Board [][] board = new Board [8][8];
+		Board [][] board = new Board[8][8];
 		displayBoard(board);
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Which column do you want to place your piece?");
 		int col = kb.nextInt();
 		System.out.println("Which column do you want to place your piece?");
 		int row = kb.nextInt();
-		displayBoard(board);
+
 			
 	}
 
