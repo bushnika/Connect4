@@ -2,10 +2,12 @@ package bushnik.alexa;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Player {
-
+	
+	Scanner kb = new Scanner(System.in);
 	private String name; // name of the player
 	private int color; // color of the chips
 	private Board board; // board
@@ -17,10 +19,10 @@ public class Player {
 	}
 
 	public void setNames() throws IOException {
-		BufferedReader line = new BufferedReader(new InputStreamReader(
-				System.in));
-		System.out.println("tell me your name: ");
-		this.name = line.readLine();
+
+		System.out.println("What is your name: ");
+		String line = kb.nextLine();
+		this.name = line;
 	}
 
 	public String getName() {

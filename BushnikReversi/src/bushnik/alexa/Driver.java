@@ -1,40 +1,38 @@
 package bushnik.alexa;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class Driver {
 	
 	Scanner kb = new Scanner(System.in);
 	private Board board = new Board(); // creates the board
-	private Player[] players = new Player[2]; // array of players for two players
+	private Player[] players = new Player[2]; // array of players 
 	private Turn turn; // creates a turn
 
 	public static void main(String[] args) throws IOException {
 		new Driver().startGame();
 	}
 
-	public void startGame() throws IOException /* the game starts */{
+	public void startGame() throws IOException {
 
 		int who = this.initPlayers(); // initializes the first player
 		this.turn = new Turn((who + 1) % 2); // initializes the turn
 
-		for (int i = 0; i < 2; i++) { // prompts both the players for their
-										// names
+		for (int i = 0; i < 2; i++) { // asks players for their names
 			System.out.print("Player" + (i + 1) + " ");
 			players[i].setNames();
 		}
 
 		System.out.println(players[0].getName() + " moves"); // indicates whose turn it is
-		this.players[turn.getTurn()].findCanSelect(); // finds the possible moves for player whose turn it is
+		this.players[turn.getTurn()].findCanSelect(); 
 		board.display(); // displays board
 
-		while (!board.gameOver()) { // when game is not over find possible moves
+		while (!board.gameOver()) { // find possible moves when game not over
 
 			int count = 0; // count of possible moves
-			for (int j = 0; j < Board.num; j++)// search the entire board
+			for (int j = 0; j < Board.num; j++)
+				// search the entire board
 				for (int i = 0; i < Board.num; i++)
 					if (board.findLegalMoveNew(new Move(i, j), turn.getTurn()) == true) {
 						count++; // add a possible move to the count
@@ -47,13 +45,13 @@ public class Driver {
 			}
 
 			else {
-				int row = this.readRow(); // prompts the player for the row wanted
-				int col = this.readCol(); // prompts the player for the column wanted
+				int row = this.readRow(); 
+				int col = this.readCol(); 
 
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
 					this.players[turn.getTurn()].placeChip(row, col); // place the chip
-					turn.change(); // changes turn
+					turn.change(); // change the turn to the other player
 				}
 
 				this.players[turn.getTurn()].findCanSelect(); // find the possible moves
@@ -61,11 +59,9 @@ public class Driver {
 				System.out.println(players[turn.getTurn()].getName() + " moves"); // indicates whose turn it is
 			}
 		}
-		//ADD COUNTER FOR CHIPS
-		//board.getChipsCount(0);
-		//board.getChipsCount(1);
+		System.out.println("Game over!");
+		
 	}
-
 
 	private int initPlayers() {
 		Turn a = new Turn(); // temporary turn
@@ -73,9 +69,8 @@ public class Driver {
 		this.players[0] = new Player("name 1", a.getTurn(), this.board); // player 1
 		a.change(); // changes to player 2
 		this.players[1] = new Player("name 2", a.getTurn(), this.board); // player 2
-		return 1;//starts with white
+		return 1;
 	}
-
 
 	private int readRow() {
 		System.out.print("Select a row: "); 
@@ -87,7 +82,7 @@ public class Driver {
 	private int readCol() {
 		System.out.print("Select a column: ");
 		Integer value = -1;
-		value = kb.nextInt(); 
+		value = kb.nextInt();
 		return value; // returns value selected
 	}
 

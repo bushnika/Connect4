@@ -4,7 +4,7 @@ public class Cell {
 
 	public static final char BLACK = 'B'; // displays 'B' for the black player.
 	public static final char WHITE = 'W'; // displays 'W' for the white player.
-	public static final char CANSELECT = 'X'; // displays 'X' for the possible
+	public static final char CANSELECT = '*'; // displays '*' for the possible
 												// moves available.
 
 	public boolean empty; // boolean if cell empty or not
@@ -56,7 +56,7 @@ public class Cell {
 		if (this.isEmpty()) // if cell empty
 		{
 			if (this.canselect) // if can be selected
-				System.out.print("[ " + CANSELECT + " ]"); // print 'X'
+				System.out.print("[ " + CANSELECT + " ]"); // print '*'
 			else
 				System.out.print("[ " + " " + " ]"); // print empty space
 		} else {

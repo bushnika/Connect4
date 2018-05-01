@@ -3,10 +3,13 @@ package bushnik.alexa;
 import java.util.ArrayList;
 
 public class Board {
+
 	public static final int num = 8; // 8 rows by 8 columns board
 	private Cell[][] cells = new Cell[num][num]; // matrix
 	int[] counter = new int[2]; // counter for both players moves
 	boolean gameOver; // game is over
+	final static int BLACK = 1;
+	final static int WHITE = 0;
 
 	public final Move up = new Move(0, -1); // up
 	public final Move down = new Move(0, 1); // down
@@ -17,7 +20,7 @@ public class Board {
 	public final Move downLeft = new Move(-1, 1); // down and left
 	public final Move downRight = new Move(1, 1); // down and right
 
-	final Move directions[] = { up, down, left, right, upLeft, upRight, downLeft, downRight };
+	final Move directions[] = { up, down, left, right, upLeft, upRight, downLeft, downRight }; // array of possible directions
 
 	public Board() {
 		for (int i = 0; i < num; i++) // for i and j coordinates
@@ -40,7 +43,6 @@ public class Board {
 		gameOver = false;
 	}
 
-
 	public void display() {
 
 		for (int i = 0; i < num; i++) {
@@ -61,7 +63,6 @@ public class Board {
 
 	}
 
-
 	public void placeChip(int color, int row, int col) {
 		this.cells[row][col].placeChip(color);
 	}
@@ -78,22 +79,17 @@ public class Board {
 		if (cells[i][j].isEmpty() == false) { // checks if cell is empty
 			return false; // if cell not empty, no moves available
 		} else {
-			for (int k = 0; k < directions.length; k++) { // get all the
-															// directions one by
-															// one
-
-				Move direction = directions[k]; // direction currently in use is
-												// stored
-				int iDir = direction.getI(); // gets the i axis of the direction
-				int jDir = direction.getJ(); // gets the j axis of the direction
+			for (int k = 0; k < directions.length; k++) { // get all directions
+				Move direction = directions[k]; 
+				int iDir = direction.getI(); //gets i and j axis
+				int jDir = direction.getJ(); 
 				int jump = 2; // jump one chip
 				try {
 					if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
-						while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8
-								&& (i + (jump * iDir)) > -1) { // search board
+						while ((j + (jump * jDir)) > -1&& (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { 
 							if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) { // cell cannot be empty
 								if (cells[i + jump * iDir][j + jump * jDir].getPlayer() == playing)
-									return true; // look for a move
+									return true; 
 								else if (cells[i + jump * iDir][j + jump * jDir].isEmpty())
 									break;
 							} else {
@@ -110,16 +106,13 @@ public class Board {
 		return result; // true move found, false no moves found
 	}
 
-
 	public ArrayList<Move> validMove(int color) {
 		ArrayList<Move> allValidMoves = new ArrayList<Move>();
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells.length; j++) {
 				cells[i][j].unselect();
-
 				Move testMove = new Move(i, j);
-
 				boolean valid = findLegalMoveNew(testMove, color);
 				if (valid) {
 					allValidMoves.add(testMove);
@@ -129,11 +122,9 @@ public class Board {
 		return allValidMoves;
 	}
 
-
 	public void setCanSelect(Move move) {
 		this.cells[move.getI()][move.getJ()].setSelect();
 	}
-
 
 	public boolean canSelect(Move move) {
 		return this.cells[move.getI()][move.getJ()].canSelect();
@@ -152,14 +143,9 @@ public class Board {
 			int jDir = direction.getJ();
 			boolean possible = false;
 
-			if ((j + jDir) > -1 && (j + jDir) < num && (i + iDir) < num && (i + iDir) > -1) { // checks
-																								// for
-																								// an
-																								// opponent
-																								// in
-																								// all
-																								// the
-																								// directions
+			if ((j + jDir) > -1 && (j + jDir) < num && (i + iDir) < num
+					&& (i + iDir) > -1) { // checks for an opponent in all the
+											// directions
 				if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
 					possible = true;
 				}
@@ -167,12 +153,12 @@ public class Board {
 
 			if (possible == true) {
 				int jump = 2;
-				while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8
-						&& (i + (jump * iDir)) > -1) { // search within the board
-					if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) // cell cannot be empty
+				while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8
+						&& (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { 
+					if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) //cell cannot be empty
 						if (cells[i + jump * iDir][j + jump * jDir].getPlayer() == playing) {
 							for (int k = 1; k < jump; k++) {
-								cells[i + k * iDir][j + k * jDir].changeChip();// change to colour of player
+								cells[i + k * iDir][j + k * jDir].changeChip();// change the chips colour to player colour
 							}
 							break;
 						}
@@ -182,28 +168,26 @@ public class Board {
 		}
 	}
 
+	public int getChipsCount(int color) {
 
-	public int getChipsCount(int colour) {
-
-		int scoreW = 2;
-		int scoreB = 2;
+		int scoreWhite = 2;
+		int scoreBlack = 2;
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[j].length; j++) {
-				if (colour == 0) {
-					scoreW++;
+				if (color == 0) {
+					scoreWhite++;
 				}
-				if (colour == 1) {
-					scoreB++;
+				if (color == 1) {
+					scoreBlack++;
 				}
 			}
 		}
-		counter[0] = scoreW;
-		counter[1] = scoreB;
+		counter[0] = scoreWhite;
+		counter[1] = scoreBlack;
 
-		return counter[colour];
+		return counter[color];
 	}
-
 
 	public int totalTurns() {
 		return counter[0] + counter[1];
@@ -212,7 +196,7 @@ public class Board {
 	public boolean gameOver() {
 		int count = 0;
 
-		if (counter[0] + counter[1] == 64) { // if all the cells are full then game over
+		if (counter[0] + counter[1] == 64) { // if cells are full, game over
 			return true;
 		}
 
@@ -233,5 +217,9 @@ public class Board {
 		}
 		return false;
 	}
-
+	
+	public String toString() {
+		return "White score: " + getChipsCount(0) + "\n" + "Black score: " + getChipsCount(1);
+	}
+	
 }
