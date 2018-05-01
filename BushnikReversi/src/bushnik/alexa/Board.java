@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Board {
 
 	public static final int num = 8; // 8 rows by 8 columns board
-	private Cell[][] cells = new Cell[num][num]; // matrix
+	private Cell[][] cell = new Cell[num][num]; // matrix
 	int[] counter = new int[2]; // counter for both players moves
 	boolean gameOver; // game is over
 	final static int BLACK = 1;
@@ -25,15 +25,15 @@ public class Board {
 	public Board() {
 		for (int i = 0; i < num; i++) // for i and j coordinates
 			for (int j = 0; j < num; j++)
-				this.cells[i][j] = new Cell(); // sets all the cells to empty
+				this.cell[i][j] = new Cell(); // sets all the cells to empty
 
 		// 1 for black starting chips
-		this.cells[3][4].placeChip(1);
-		this.cells[4][3].placeChip(1);
+		this.cell[3][4].placeChip(1);
+		this.cell[4][3].placeChip(1);
 
 		// 0 for white starting chips
-		this.cells[3][3].placeChip(0);
-		this.cells[4][4].placeChip(0);
+		this.cell[3][3].placeChip(0);
+		this.cell[4][4].placeChip(0);
 
 		// start counter at 2 for each player
 		counter[0] = 2; // white player counter
@@ -48,7 +48,7 @@ public class Board {
 		for (int i = 0; i < num; i++) {
 			System.out.print(i + " ");
 			for (int j = 0; j < num; j++) {
-				this.cells[i][j].display();
+				this.cell[i][j].display();
 			}
 
 			System.out.println(" ");
@@ -60,11 +60,15 @@ public class Board {
 		}
 
 		System.out.println();
-
+		System.out.println("White score: " + getChipsCount(0));
+		System.out.println("Black score: " + getChipsCount(1));
+		System.out.println();
+		//System.out.println(totalTurns());
+		//System.out.println();
 	}
 
-	public void placeChip(int color, int row, int col) {
-		this.cells[row][col].placeChip(color);
+	public void placeChip(int colour, int row, int col) {
+		this.cell[row][col].placeChip(colour);
 	}
 
 	public boolean findLegalMoveNew(Move move, int player) {
@@ -76,7 +80,7 @@ public class Board {
 		int i = move.getI(); // get position i axis
 		int j = move.getJ(); // get position j axis
 
-		if (cells[i][j].isEmpty() == false) { // checks if cell is empty
+		if (cell[i][j].isEmpty() == false) { // checks if cell is empty
 			return false; // if cell not empty, no moves available
 		} else {
 			for (int k = 0; k < directions.length; k++) { // get all directions
@@ -85,12 +89,12 @@ public class Board {
 				int jDir = direction.getJ(); 
 				int jump = 2; // jump one chip
 				try {
-					if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
+					if (cell[i + iDir][j + jDir].getPlayer() == opponent) {
 						while ((j + (jump * jDir)) > -1&& (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { 
-							if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) { // cell cannot be empty
-								if (cells[i + jump * iDir][j + jump * jDir].getPlayer() == playing)
+							if (!cell[i + jump * iDir][j + jump * jDir].isEmpty()) { // cell cannot be empty
+								if (cell[i + jump * iDir][j + jump * jDir].getPlayer() == playing)
 									return true; 
-								else if (cells[i + jump * iDir][j + jump * jDir].isEmpty())
+								else if (cell[i + jump * iDir][j + jump * jDir].isEmpty())
 									break;
 							} else {
 								break;
@@ -106,14 +110,14 @@ public class Board {
 		return result; // true move found, false no moves found
 	}
 
-	public ArrayList<Move> validMove(int color) {
+	public ArrayList<Move> validMove(int colour) {
 		ArrayList<Move> allValidMoves = new ArrayList<Move>();
 
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells.length; j++) {
-				cells[i][j].unselect();
+		for (int i = 0; i < cell.length; i++) {
+			for (int j = 0; j < cell.length; j++) {
+				cell[i][j].unselect();
 				Move testMove = new Move(i, j);
-				boolean valid = findLegalMoveNew(testMove, color);
+				boolean valid = findLegalMoveNew(testMove, colour);
 				if (valid) {
 					allValidMoves.add(testMove);
 				}
@@ -123,11 +127,11 @@ public class Board {
 	}
 
 	public void setCanSelect(Move move) {
-		this.cells[move.getI()][move.getJ()].setSelect();
+		this.cell[move.getI()][move.getJ()].setSelect();
 	}
 
 	public boolean canSelect(Move move) {
-		return this.cells[move.getI()][move.getJ()].canSelect();
+		return this.cell[move.getI()][move.getJ()].canSelect();
 	}
 
 	public void replaceChip(Move move, int player) {
@@ -144,9 +148,8 @@ public class Board {
 			boolean possible = false;
 
 			if ((j + jDir) > -1 && (j + jDir) < num && (i + iDir) < num
-					&& (i + iDir) > -1) { // checks for an opponent in all the
-											// directions
-				if (cells[i + iDir][j + jDir].getPlayer() == opponent) {
+					&& (i + iDir) > -1) { // checks for an opponent in all directions
+				if (cell[i + iDir][j + jDir].getPlayer() == opponent) {
 					possible = true;
 				}
 			}
@@ -155,10 +158,10 @@ public class Board {
 				int jump = 2;
 				while ((j + (jump * jDir)) > -1 && (j + (jump * jDir)) < 8
 						&& (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { 
-					if (!cells[i + jump * iDir][j + jump * jDir].isEmpty()) //cell cannot be empty
-						if (cells[i + jump * iDir][j + jump * jDir].getPlayer() == playing) {
+					if (!cell[i + jump * iDir][j + jump * jDir].isEmpty()) //cell cannot be empty
+						if (cell[i + jump * iDir][j + jump * jDir].getPlayer() == playing) {
 							for (int k = 1; k < jump; k++) {
-								cells[i + k * iDir][j + k * jDir].changeChip();// change the chips colour to player colour
+								cell[i + k * iDir][j + k * jDir].changeChip();
 							}
 							break;
 						}
@@ -167,32 +170,26 @@ public class Board {
 			}
 		}
 	}
-
-	public int getChipsCount(int color) {
-
-		int scoreWhite = 2;
-		int scoreBlack = 2;
-
-		for (int i = 0; i < cells.length; i++) {
-			for (int j = 0; j < cells[j].length; j++) {
-				if (color == 0) {
-					scoreWhite++;
-				}
-				if (color == 1) {
-					scoreBlack++;
-				}
-			}
-		}
-		counter[0] = scoreWhite;
-		counter[1] = scoreBlack;
-
-		return counter[color];
-	}
-
+/*
 	public int totalTurns() {
 		return counter[0] + counter[1];
 	}
+	*/
+	
+	public int getChipsCount(int colour) {
 
+		int score=0;
+		
+		for (int i = 0; i < num; i++) {
+			for (int j = 0; j < num; j++) {
+				if (cell[i][j].getPlayer() == colour) {
+					score++;
+				}
+			}
+		}
+		return score;
+	}
+	
 	public boolean gameOver() {
 		int count = 0;
 
@@ -216,10 +213,5 @@ public class Board {
 			}
 		}
 		return false;
-	}
-	
-	public String toString() {
-		return "White score: " + getChipsCount(0) + "\n" + "Black score: " + getChipsCount(1);
-	}
-	
+	}	
 }

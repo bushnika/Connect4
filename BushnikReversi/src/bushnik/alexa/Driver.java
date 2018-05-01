@@ -9,6 +9,9 @@ public class Driver {
 	private Board board = new Board(); // creates the board
 	private Player[] players = new Player[2]; // array of players 
 	private Turn turn; // creates a turn
+	int[] count = new int[2];
+	final static int BLACK = 1;
+	final static int WHITE = 0;
 
 	public static void main(String[] args) throws IOException {
 		new Driver().startGame();
@@ -20,14 +23,14 @@ public class Driver {
 		this.turn = new Turn((who + 1) % 2); // initializes the turn
 
 		for (int i = 0; i < 2; i++) { // asks players for their names
-			System.out.print("Player" + (i + 1) + " ");
+			System.out.print("Player " + (i + 1) + " ");
 			players[i].setNames();
 		}
 
 		System.out.println(players[0].getName() + " moves"); // indicates whose turn it is
 		this.players[turn.getTurn()].findCanSelect(); 
 		board.display(); // displays board
-
+		
 		while (!board.gameOver()) { // find possible moves when game not over
 
 			int count = 0; // count of possible moves
@@ -60,7 +63,6 @@ public class Driver {
 			}
 		}
 		System.out.println("Game over!");
-		
 	}
 
 	private int initPlayers() {

@@ -1,7 +1,6 @@
 package bushnik.alexa;
 
 public class Turn {
-
 	private int value; // the player.
 
 	public Turn() {
