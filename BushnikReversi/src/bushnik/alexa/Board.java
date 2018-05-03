@@ -43,10 +43,18 @@ public class Board {
 		gameOver = false;
 	}
 
-	public Cell[][] getBoard(){
-		return cell;
+	public Cell getCell(int row, int col){
+		return cell[row][col];
 	}
 	
+	public int getNumRows(){
+		return cell.length;
+	}
+	
+
+	public int getNumCols(){
+		return cell[0].length;
+	}
 	public void display() {
 
 		for (int i = 0; i < num; i++) {
