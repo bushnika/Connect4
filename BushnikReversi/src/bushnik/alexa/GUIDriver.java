@@ -1,5 +1,7 @@
 package bushnik.alexa;
 
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,6 +37,7 @@ public class GUIDriver extends Application {
 		for (int row = 0; row < board.getNumRows(); row++) {
 			for (int col = 0; col < board.getNumCols(); col++) {
 				slots[row][col] = new NewButton(row, col);
+				
 				slots[row][col].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 				if (board.getCell(row, col).getPlayer() == 1) {
 					slots[row][col].setStyle("-fx-base: #FF0000;");
@@ -43,6 +46,23 @@ public class GUIDriver extends Application {
 				} else {
 					slots[row][col].setStyle("-fx-base: #C0C0C0;");
 				}
+				slots[row][col].setOnAction(new EventHandler<ActionEvent>() {
+		            @Override
+		            public void handle(ActionEvent event) {
+
+		            	int row = ((NewButton)event.getSource()).getRow();
+		            	int col = ((NewButton)event.getSource()).getCol();
+		            	
+		            	Move move = new Move(row, col); // creates a new move
+		            	if (board.canSelect(move)) { // if move valid
+							players[turn.getTurn()].placeChip(row, col); // place the chip
+							turn.change(); // change the turn to the other player
+						}
+		            	System.out.print("Move made at: (" + ((NewButton)event.getSource()).getRow());
+		            	System.out.print("," + ((NewButton)event.getSource()).getCol() + ")\n");
+
+		            }
+		        });
 				gridPane.add(slots[row][col], col, row);
 
 				window.setScene(mySceneGraph);
