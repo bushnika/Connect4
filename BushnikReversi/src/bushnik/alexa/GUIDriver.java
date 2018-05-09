@@ -1,8 +1,9 @@
 package bushnik.alexa;
 
-import java.io.IOException;
-
 import javafx.application.Application;
+
+import java.io.IOException;
+import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 public class GUIDriver extends Application {
 
+	Scanner kb = new Scanner(System.in);
 	private Board board = new Board(); // creates the board
 	private Player[] players = new Player[2]; // array of players
 	private Turn turn; // creates a turn
@@ -49,15 +51,12 @@ public class GUIDriver extends Application {
 				slots[row][col].setOnAction(new EventHandler<ActionEvent>() {
 		            @Override
 		            public void handle(ActionEvent event) {
-
+		            	
 		            	int row = ((NewButton)event.getSource()).getRow();
 		            	int col = ((NewButton)event.getSource()).getCol();
 		            	
 		            	Move move = new Move(row, col); // creates a new move
-		            	if (board.canSelect(move)) { // if move valid
-							players[turn.getTurn()].placeChip(row, col); // place the chip
-							turn.change(); // change the turn to the other player
-						}
+		            	
 		            	System.out.print("Move made at: (" + ((NewButton)event.getSource()).getRow());
 		            	System.out.print("," + ((NewButton)event.getSource()).getCol() + ")\n");
 

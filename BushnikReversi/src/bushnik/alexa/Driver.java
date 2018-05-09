@@ -34,8 +34,7 @@ public class Driver {
 		while (!board.gameOver()) { // find possible moves when game not over
 
 			int count = 0; // count of possible moves
-			for (int j = 0; j < Board.num; j++)
-				// search the entire board
+			for (int j = 0; j < Board.num; j++)// search the entire board
 				for (int i = 0; i < Board.num; i++)
 					if (board.findLegalMoveNew(new Move(i, j), turn.getTurn()) == true) {
 						count++; // add a possible move to the count
