@@ -79,10 +79,6 @@ public class Board {
 		//System.out.println();
 	}
 
-	public void placeChip(int colour, int row, int col) {
-		this.cell[row][col].placeChip(colour);
-	}
-
 	public boolean findLegalMoveNew(Move move, int player) {
 
 		boolean result = false; // no legal moves found by default
@@ -119,9 +115,19 @@ public class Board {
 
 			}
 		}
-		return result; // true move found, false no moves found
+		return result; // if true move found, if false no moves found
 	}
-
+	
+	/**
+	 * Places the chip on the board
+	 * @param colour colour of the chip (player)
+	 * @param row the row chosen
+	 * @param col the column chosen
+	 */
+	public void placeChip(int colour, int row, int col) {
+		this.cell[row][col].placeChip(colour);
+	}
+	
 	public ArrayList<Move> validMove(int colour) {
 		ArrayList<Move> allValidMoves = new ArrayList<Move>();
 
@@ -182,11 +188,6 @@ public class Board {
 			}
 		}
 	}
-/*
-	public int totalTurns() {
-		return counter[0] + counter[1];
-	}
-	*/
 	
 	public int getChipsCount(int colour) {
 
