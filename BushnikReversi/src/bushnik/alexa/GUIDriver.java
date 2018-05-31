@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -40,6 +41,9 @@ public class GUIDriver extends Application {
 	public void start(Stage window) throws Exception {
 		window.setTitle("Othello Game");
 		GridPane gridPane = new GridPane();
+		Button btn = new Button();
+		btn.setText("Click to view score");
+		
 		Label label = new Label();
 		Scene mySceneGraph = new Scene(gridPane, 500, 500);
 		gridPane.setAlignment(Pos.TOP_CENTER);
@@ -80,16 +84,17 @@ public class GUIDriver extends Application {
 
 							}
 							// red
-							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {
+							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {	
 								board.placeChip(i, row, col);
 								board.replaceChip(new Move(row, col), i);
 
 								i = 0;
-
 								/*
-								 * Alert alert = new Alert(AlertType.INFORMATION); alert.setTitle("Turn");
-								 * alert.setHeaderText( "Green moves"); alert.showAndWait();
-								 */
+								Alert alert = new Alert(AlertType.INFORMATION); 
+								 alert.setTitle("Turn");
+								 alert.setContentText("Green Score:" + board.getChipsCount(0));
+								 alert.setHeaderText( "Green moves"); 
+								 alert.showAndWait();*/
 
 							}
 
@@ -110,10 +115,10 @@ public class GUIDriver extends Application {
 						System.out.print("," + ((NewButton) event.getSource()).getCol() + ")\n");
 						if (board.gameOver()) {
 							System.out.println("Game Over!");
-							Alert alert = new Alert(AlertType.INFORMATION);
-							alert.setTitle("Game Over!");
-							//alert.set(board.scoreDisplay());
-							alert.showAndWait();
+							//Alert alert = new Alert(AlertType.INFORMATION);
+							//alert.setTitle("Game Over!");
+							//alert.setContentText("White Score:" + board.getChipsCount(0));
+							//alert.showAndWait();
 						}
 
 					}
