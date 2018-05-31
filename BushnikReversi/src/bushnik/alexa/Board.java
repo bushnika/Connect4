@@ -72,11 +72,11 @@ public class Board {
 		}
 
 		System.out.println();
+	}
+	public void scoreDisplay() {
 		System.out.println("White score: " + getChipsCount(0));
 		System.out.println("Black score: " + getChipsCount(1));
 		System.out.println();
-		//System.out.println(totalTurns());
-		//System.out.println();
 	}
 
 	public boolean findLegalMoveNew(Move move, int player) {

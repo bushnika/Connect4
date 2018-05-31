@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import javafx.stage.Stage;
@@ -37,8 +38,11 @@ public class GUIDriver extends Application {
 	@Override
 
 	public void start(Stage window) throws Exception {
+		window.setTitle("Othello Game");
 		GridPane gridPane = new GridPane();
+		Label label = new Label();
 		Scene mySceneGraph = new Scene(gridPane, 500, 500);
+		Scene sceneGraph = new Scene(label, 100, 200);
 		gridPane.setAlignment(Pos.TOP_CENTER);
 
 		for (int row = 0; row < board.getNumRows(); row++) {
@@ -66,10 +70,7 @@ public class GUIDriver extends Application {
 						if (event.getSource() == slots[row][col]) {
 							// green
 							if (board.findLegalMoveNew(new Move(row, col), i) == true && i == 0) {
-								// slots[row][col].setStyle("-fx-base:
-								// #00FF00;");
 								board.placeChip(i, row, col);
-
 								board.replaceChip(new Move(row, col), i);
 
 								i = 1;
@@ -81,21 +82,19 @@ public class GUIDriver extends Application {
 							}
 							// red
 							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {
-								// slots[row][col].setStyle("-fx-base:
-								// #FF0000;");
 								board.placeChip(i, row, col);
-
 								board.replaceChip(new Move(row, col), i);
 
 								i = 0;
-								/*
-								 * Alert alert = new Alert(AlertType.INFORMATION); alert.setTitle("Turn");
-								 * alert.setHeaderText( "Green moves"); alert.showAndWait();
-								 */
+								
+								 Alert alert = new Alert(AlertType.INFORMATION); 
+								 alert.setTitle("Turn");
+								 alert.setHeaderText( "Green moves"); 
+								 alert.showAndWait();
+								 
 
 							}
-
-							board.display();
+							
 							for (int j = 0; j < 8; j++) {
 								for (int k = 0; k < 8; k++) {
 									if (board.getCell(j, k).getPlayer() == 0) {
@@ -108,6 +107,7 @@ public class GUIDriver extends Application {
 								}
 							}
 						}
+						board.scoreDisplay();
 						System.out.print("Move made at: (" + ((NewButton) event.getSource()).getRow());
 						System.out.print("," + ((NewButton) event.getSource()).getCol() + ")\n");
 						if (board.gameOver()) {
@@ -124,4 +124,5 @@ public class GUIDriver extends Application {
 		window.show();
 
 	}
+
 }

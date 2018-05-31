@@ -43,6 +43,7 @@ public class Driver {
 			if (count == 0) { // when no possible moves
 				turn.change(); // change the turn to the other player
 				board.display(); // display the updated board
+				board.scoreDisplay(); //display updated score
 				count = 0; // reset count to 0
 			}
 
