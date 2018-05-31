@@ -42,7 +42,6 @@ public class GUIDriver extends Application {
 		GridPane gridPane = new GridPane();
 		Label label = new Label();
 		Scene mySceneGraph = new Scene(gridPane, 500, 500);
-		Scene sceneGraph = new Scene(label, 100, 200);
 		gridPane.setAlignment(Pos.TOP_CENTER);
 
 		for (int row = 0; row < board.getNumRows(); row++) {
@@ -86,15 +85,14 @@ public class GUIDriver extends Application {
 								board.replaceChip(new Move(row, col), i);
 
 								i = 0;
-								
-								 Alert alert = new Alert(AlertType.INFORMATION); 
-								 alert.setTitle("Turn");
-								 alert.setHeaderText( "Green moves"); 
-								 alert.showAndWait();
-								 
+
+								/*
+								 * Alert alert = new Alert(AlertType.INFORMATION); alert.setTitle("Turn");
+								 * alert.setHeaderText( "Green moves"); alert.showAndWait();
+								 */
 
 							}
-							
+
 							for (int j = 0; j < 8; j++) {
 								for (int k = 0; k < 8; k++) {
 									if (board.getCell(j, k).getPlayer() == 0) {
@@ -112,6 +110,10 @@ public class GUIDriver extends Application {
 						System.out.print("," + ((NewButton) event.getSource()).getCol() + ")\n");
 						if (board.gameOver()) {
 							System.out.println("Game Over!");
+							Alert alert = new Alert(AlertType.INFORMATION);
+							alert.setTitle("Game Over!");
+							//alert.set(board.scoreDisplay());
+							alert.showAndWait();
 						}
 
 					}
