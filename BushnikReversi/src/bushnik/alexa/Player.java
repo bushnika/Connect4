@@ -11,24 +11,38 @@ public class Player {
 	private String name; // name of the player
 	private int colour; // colour of the chips
 	private Board board; // board
-
+	/**
+	 * Creates a player
+	 * @param name - name of the player
+	 * @param colour - colour of the chip
+	 * @param board - the board used
+	 */
 	public Player(String name, int colour, Board board) {
 		this.name = name;
 		this.colour = colour;
 		this.board = board;
 	}
-
+	/**
+	 * Gets players names and sets to variable
+	 * @throws IOException Null values
+	 */
 	public void setNames() throws IOException {
 
 		System.out.println("What is your name: ");
 		String line = kb.nextLine();
 		this.name = line;
 	}
-
+	/**
+	 * Gets the name of the player
+	 * @return name of player
+	 */
 	public String getName() {
 		return this.name;
 	}
-
+	/**
+	 * Gets the colour number of the player
+	 * @return colour of player
+	 */
 	public int getcolour() {
 		return this.colour;
 	}
@@ -45,7 +59,9 @@ public class Player {
 		this.board.replaceChip(move, this.colour);
 		
 	}
-
+	/**
+	 * Finds the valid moves and allows them to be selected
+	 */
 	public void findCanSelect() {
 
 		ArrayList<Move> moves = board.validMove(this.colour);
