@@ -8,10 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 import javafx.stage.Stage;
@@ -20,11 +16,8 @@ public class GUIDriver extends Application {
 
 	Scanner kb = new Scanner(System.in);
 	private Board board = new Board(); // creates the board
-	private Player[] players = new Player[2]; // array of players
 	int player;
-	private Turn turn; // creates a turn
 	int[] count = new int[2];
-	private Cell[][] cell = new Cell[8][8];
 	final static int BLACK = 1;
 	final static int WHITE = 0;
 	int i = 0;
@@ -37,14 +30,12 @@ public class GUIDriver extends Application {
 	}
 
 	@Override
-
+	/**
+	 * Starts the game, sets up GUI elements
+	 */
 	public void start(Stage window) throws Exception {
 		window.setTitle("Othello Game");
 		GridPane gridPane = new GridPane();
-		Button btn = new Button();
-		btn.setText("Click to view score");
-		
-		Label label = new Label();
 		Scene mySceneGraph = new Scene(gridPane, 500, 500);
 		gridPane.setAlignment(Pos.TOP_CENTER);
 
@@ -54,9 +45,9 @@ public class GUIDriver extends Application {
 
 				slots[row][col].setPrefSize(BUTTON_WIDTH, BUTTON_HEIGHT);
 				if (board.getCell(row, col).getPlayer() == 0) {
-					slots[row][col].setStyle("-fx-base: #00FF00;");
+					slots[row][col].setStyle("-fx-base: #FFFFFF;");
 				} else if (board.getCell(row, col).getPlayer() == 1) {
-					slots[row][col].setStyle("-fx-base: #FF0000;");
+					slots[row][col].setStyle("-fx-base: #000000;");
 				} else {
 					slots[row][col].setStyle("-fx-base: #C0C0C0;");
 				}
@@ -68,42 +59,29 @@ public class GUIDriver extends Application {
 						int row = ((NewButton) event.getSource()).getRow();
 						int col = ((NewButton) event.getSource()).getCol();
 
-						Move move = new Move(row, col); // creates a new move\
-
 						if (event.getSource() == slots[row][col]) {
-							// green
+							// white
 							if (board.findLegalMoveNew(new Move(row, col), i) == true && i == 0) {
 								board.placeChip(i, row, col);
 								board.replaceChip(new Move(row, col), i);
 
 								i = 1;
-								/*
-								 * Alert alert = new Alert(AlertType.INFORMATION); alert.setTitle("Turn");
-								 * alert.setHeaderText( "Red moves"); alert.showAndWait();
-								 */
 
 							}
-							// red
-							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {	
+							// black
+							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {
 								board.placeChip(i, row, col);
 								board.replaceChip(new Move(row, col), i);
 
 								i = 0;
-								/*
-								Alert alert = new Alert(AlertType.INFORMATION); 
-								 alert.setTitle("Turn");
-								 alert.setContentText("Green Score:" + board.getChipsCount(0));
-								 alert.setHeaderText( "Green moves"); 
-								 alert.showAndWait();*/
-
 							}
 
 							for (int j = 0; j < 8; j++) {
 								for (int k = 0; k < 8; k++) {
 									if (board.getCell(j, k).getPlayer() == 0) {
-										slots[j][k].setStyle("-fx-base: #00FF00;");
+										slots[j][k].setStyle("-fx-base: #FFFFFF;");
 									} else if (board.getCell(j, k).getPlayer() == 1) {
-										slots[j][k].setStyle("-fx-base: #FF0000;");
+										slots[j][k].setStyle("-fx-base: #000000;");
 									} else {
 										slots[j][k].setStyle("-fx-base: #C0C0C0;");
 									}
@@ -115,10 +93,9 @@ public class GUIDriver extends Application {
 						System.out.print("," + ((NewButton) event.getSource()).getCol() + ")\n");
 						if (board.gameOver()) {
 							System.out.println("Game Over!");
-							//Alert alert = new Alert(AlertType.INFORMATION);
-							//alert.setTitle("Game Over!");
-							//alert.setContentText("White Score:" + board.getChipsCount(0));
-							//alert.showAndWait();
+							System.out.println("Final Score:");
+							board.winner();
+							board.scoreDisplay();
 						}
 
 					}
