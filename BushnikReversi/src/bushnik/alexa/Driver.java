@@ -16,7 +16,10 @@ public class Driver {
 	public static void main(String[] args) throws IOException {
 		new Driver().startGame();
 	}
-
+	/**
+	 * Starts the game by finding first players possible moves
+	 * @throws IOException
+	 */
 	public void startGame() throws IOException {
 
 		int who = this.initPlayers(); // initializes the first player
@@ -64,7 +67,10 @@ public class Driver {
 		}
 		System.out.println("Game over!");
 	}
-
+	/**
+	 * Creates two players
+	 * @return 1 if black starts, 0 for white
+	 */
 	private int initPlayers() {
 		Turn a = new Turn(); // temporary turn
 
@@ -73,14 +79,20 @@ public class Driver {
 		this.players[1] = new Player("name 2", a.getTurn(), this.board); // player 2
 		return 1;
 	}
-
+	/**
+	 * Gets the row for the move
+	 * @return the value of row wanted
+	 */
 	private int readRow() {
 		System.out.print("Select a row: "); 
 		Integer value = -1;
 		value = kb.nextInt();
 		return value; // returns the value selected
 	}
-
+	/**
+	 * Gets the col for the move
+	 * @return the value of col wanted
+	 */
 	private int readCol() {
 		System.out.print("Select a column: ");
 		Integer value = -1;
