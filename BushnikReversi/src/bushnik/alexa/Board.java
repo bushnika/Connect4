@@ -42,19 +42,32 @@ public class Board {
 		// allows moves by default at start of game
 		gameOver = false;
 	}
-
+	/**
+	 * Gets the cell clicked
+	 * @param row - row selected
+	 * @param col - col selected
+	 * @return row and col of selected cell
+	 */
 	public Cell getCell(int row, int col){
 		return cell[row][col];
 	}
-	
+	/**
+	 * Gets the row of selected cell
+	 * @returns row of cell
+	 */
 	public int getNumRows(){
 		return cell.length;
 	}
-	
-
+	/**
+	 * Gets the col of selected cell
+	 * @returns col of cell
+	 */
 	public int getNumCols(){
 		return cell[0].length;
 	}
+	/**
+	 * Displays the board with rows and col numbers
+	 */
 	public void display() {
 
 		for (int i = 0; i < num; i++) {
@@ -73,12 +86,30 @@ public class Board {
 
 		System.out.println();
 	}
+	/**
+	 * Displays the winner of the game
+	 */
+	public void winner(){
+		if (getChipsCount(0)<getChipsCount(1)){
+			System.out.println("Black Won!");
+		}else if(getChipsCount(1)<getChipsCount(0)){
+			System.out.println("White Won!");
+		}
+	}
+	/**
+	 * Displays the scores of both players
+	 */
 	public void scoreDisplay() {
 		System.out.println("White score: " + getChipsCount(0));
 		System.out.println("Black score: " + getChipsCount(1));
 		System.out.println();
 	}
-
+	/**
+	 * Finds all the valid and available moves of current player
+	 * @param move - the move chosen
+	 * @param player - the current player
+	 * @return boolean true if valid move otherwise false
+	 */
 	public boolean findLegalMoveNew(Move move, int player) {
 
 		boolean result = false; // no legal moves found by default
@@ -127,7 +158,11 @@ public class Board {
 	public void placeChip(int colour, int row, int col) {
 		this.cell[row][col].placeChip(colour);
 	}
-	
+	/**
+	 * An array list of all valid moves available
+	 * @param colour - colour of player
+	 * @return array list of all valid moves
+	 */
 	public ArrayList<Move> validMove(int colour) {
 		ArrayList<Move> allValidMoves = new ArrayList<Move>();
 
@@ -143,15 +178,26 @@ public class Board {
 		}
 		return allValidMoves;
 	}
-
+	/**
+	 * Allows the cell to be selected
+	 * @param move - the move chosen
+	 */
 	public void setCanSelect(Move move) {
 		this.cell[move.getI()][move.getJ()].setSelect();
 	}
-
+	/**
+	 * Allows the cell to be selected
+	 * @param move - the move chosen
+	 * @return true when cell can be selected otherwise false
+	 */
 	public boolean canSelect(Move move) {
 		return this.cell[move.getI()][move.getJ()].canSelect();
 	}
-
+	/**
+	 * Replaces the chip(s) in between the players old and current chip.
+	 * @param move - the move chosen
+	 * @param player - the current player
+	 */
 	public void replaceChip(Move move, int player) {
 		int opponent = (player + 1) % 2;
 		int playing = player;
@@ -188,7 +234,11 @@ public class Board {
 			}
 		}
 	}
-	
+	/**
+	 * Updates the number/counter of chips on the board per player
+	 * @param colour - the colour of the player
+	 * @return counter for each player
+	 */
 	public int getChipsCount(int colour) {
 
 		int score=0;
@@ -202,7 +252,10 @@ public class Board {
 		}
 		return score;
 	}
-	
+	/**
+	 * Checks if all the 64 chips have been placed on board meaning the game is over.
+	 * @return boolean true if game over otherwise false
+	 */
 	public boolean gameOver() {
 		int count = 0;
 
