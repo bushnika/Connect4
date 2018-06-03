@@ -51,8 +51,8 @@ public class Driver {
 			}
 
 			else {
-				int row = this.readRow(); 
-				int col = this.readCol(); 
+				int row = this.getRow(); 
+				int col = this.getCol(); 
 
 				Move move = new Move(row, col); // creates a new move
 				if (board.canSelect(move)) { // if move valid
@@ -83,7 +83,7 @@ public class Driver {
 	 * Gets the row for the move
 	 * @return the value of row wanted
 	 */
-	private int readRow() {
+	private int getRow() {
 		System.out.print("Select a row: "); 
 		Integer value = -1;
 		value = kb.nextInt();
@@ -93,7 +93,7 @@ public class Driver {
 	 * Gets the col for the move
 	 * @return the value of col wanted
 	 */
-	private int readCol() {
+	private int getCol() {
 		System.out.print("Select a column: ");
 		Integer value = -1;
 		value = kb.nextInt();
