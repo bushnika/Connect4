@@ -1,7 +1,7 @@
 package bushnik.alexa;
 
 public class Turn {
-	private int value; // the player.
+	private int value; // the player number
 	/**
 	 * Creates a turn starting with a random player
 	 */

@@ -61,7 +61,7 @@ public class GUIDriver extends Application {
 
 						if (event.getSource() == slots[row][col]) {
 							// white
-							if (board.findLegalMoveNew(new Move(row, col), i) == true && i == 0) {
+							if (board.findLegalMove(new Move(row, col), i) == true && i == 0) {
 								board.placeChip(i, row, col);
 								board.replaceChip(new Move(row, col), i);
 
@@ -69,7 +69,7 @@ public class GUIDriver extends Application {
 
 							}
 							// black
-							if (board.findLegalMoveNew(new Move(row, col), i) == true & i == 1) {
+							if (board.findLegalMove(new Move(row, col), i) == true & i == 1) {
 								board.placeChip(i, row, col);
 								board.replaceChip(new Move(row, col), i);
 

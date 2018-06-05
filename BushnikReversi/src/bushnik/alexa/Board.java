@@ -13,31 +13,32 @@ public class Board {
 
 	public final Move up = new Move(0, -1); // up
 	public final Move down = new Move(0, 1); // down
-	public final Move left = new Move(-1, 0); // left
 	public final Move right = new Move(1, 0); // right
-	public final Move upLeft = new Move(-1, -1); // up and left
+	public final Move left = new Move(-1, 0); // left
 	public final Move upRight = new Move(1, -1); // up and right
-	public final Move downLeft = new Move(-1, 1); // down and left
+	public final Move upLeft = new Move(-1, -1); // up and left
 	public final Move downRight = new Move(1, 1); // down and right
+	public final Move downLeft = new Move(-1, 1); // down and left
 
-	final Move directions[] = { up, down, left, right, upLeft, upRight, downLeft, downRight }; // array of possible directions
+	final Move directions[] = { up, down, right, left, upRight, upLeft, downRight, downLeft }; // array of possible directions
 
 	public Board() {
-		for (int i = 0; i < num; i++) // for i and j coordinates
-			for (int j = 0; j < num; j++)
-				this.cell[i][j] = new Cell(); // sets all the cells to empty
-
-		// 1 for black starting chips
+		for (int row = 0; row < num; row++){ // Goes through whole board
+			for (int col = 0; col < num; col++){
+				this.cell[row][col] = new Cell(); // sets all the cells to empty
+			}
+		}
+		// 1 for black 
 		this.cell[3][4].placeChip(1);
 		this.cell[4][3].placeChip(1);
 
-		// 0 for white starting chips
+		// 0 for white 
 		this.cell[3][3].placeChip(0);
 		this.cell[4][4].placeChip(0);
 
 		// start counter at 2 for each player
-		counter[0] = 2; // white player counter
-		counter[1] = 2; // black player counter
+		counter[0] = 2; // white player 
+		counter[1] = 2; // black player 
 
 		// allows moves by default at start of game
 		gameOver = false;
@@ -110,11 +111,11 @@ public class Board {
 	 * @param player - the current player
 	 * @return boolean true if valid move otherwise false
 	 */
-	public boolean findLegalMoveNew(Move move, int player) {
+	public boolean findLegalMove(Move move, int player) {
 
 		boolean result = false; // no legal moves found by default
 		int opponent = (player + 1) % 2; // finds the opponent
-		int playing = player; // player playing
+		int cPlayer = player; // player playing
 
 		int i = move.getI(); // get position i axis
 		int j = move.getJ(); // get position j axis
@@ -131,7 +132,7 @@ public class Board {
 					if (cell[i + iDir][j + jDir].getPlayer() == opponent) {
 						while ((j + (jump * jDir)) > -1&& (j + (jump * jDir)) < 8 && (i + (jump * iDir)) < 8 && (i + (jump * iDir)) > -1) { 
 							if (!cell[i + jump * iDir][j + jump * jDir].isEmpty()) { // cell cannot be empty
-								if (cell[i + jump * iDir][j + jump * jDir].getPlayer() == playing)
+								if (cell[i + jump * iDir][j + jump * jDir].getPlayer() == cPlayer)
 									return true; 
 								else if (cell[i + jump * iDir][j + jump * jDir].isEmpty())
 									break;
@@ -163,14 +164,14 @@ public class Board {
 	 * @param colour - colour of player
 	 * @return array list of all valid moves
 	 */
-	public ArrayList<Move> validMove(int colour) {
+	public ArrayList<Move> validMoves(int colour) {
 		ArrayList<Move> allValidMoves = new ArrayList<Move>();
 
 		for (int i = 0; i < cell.length; i++) {
 			for (int j = 0; j < cell.length; j++) {
 				cell[i][j].unselect();
 				Move testMove = new Move(i, j);
-				boolean valid = findLegalMoveNew(testMove, colour);
+				boolean valid = findLegalMove(testMove, colour);
 				if (valid) {
 					allValidMoves.add(testMove);
 				}
@@ -266,10 +267,10 @@ public class Board {
 		else {
 			for (int j = 0; j < num; j++) {
 				for (int i = 0; i < num; i++) {
-					if (findLegalMoveNew(new Move(i, j), 0) == true) {
+					if (findLegalMove(new Move(i, j), 0) == true) {
 						count++;
 					}
-					if (findLegalMoveNew(new Move(i, j), 1) == true) {
+					if (findLegalMove(new Move(i, j), 1) == true) {
 						count++;
 					}
 				}

@@ -23,7 +23,19 @@ public class Player {
 		this.board = board;
 	}
 	/**
-	 * Gets players names and sets to variable
+	 * Places the piece for the chosen player at the chosen location. Replaces the piece in between 
+	 * the old piece and the new piece to the players colour.
+	 * @param row row of the piece
+	 * @param col column of the piece
+	 */
+	public void placeChip(int row, int col) {
+		this.board.placeChip(this.colour, row, col);
+		Move move = new Move(row, col);
+		this.board.replaceChip(move, this.colour);
+		
+	}
+	/**
+	 * Sets the players name to a variable
 	 * @throws IOException Null values
 	 */
 	public void setNames() throws IOException {
@@ -46,25 +58,13 @@ public class Player {
 	public int getcolour() {
 		return this.colour;
 	}
-	/**
-	 * Places the piece for the chosen player at the chosen location. Replaces the piece in between 
-	 * the old piece and the new piece to the players colour.
-	 * @param row row of the piece
-	 * @param col column of the piece
-	 */
-	public void placeChip(int row, int col) {
-		this.board.placeChip(this.colour, row, col);
 
-		Move move = new Move(row, col);
-		this.board.replaceChip(move, this.colour);
-		
-	}
 	/**
 	 * Finds the valid moves and allows them to be selected
 	 */
 	public void findCanSelect() {
 
-		ArrayList<Move> moves = board.validMove(this.colour);
+		ArrayList<Move> moves = board.validMoves(this.colour);
 
 		for (Move move : moves)
 			board.setCanSelect(move);

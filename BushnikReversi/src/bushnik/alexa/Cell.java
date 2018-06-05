@@ -2,14 +2,14 @@ package bushnik.alexa;
 
 public class Cell {
 
-	public static final char BLACK = 'B'; // displays 'B' for the black player.
-	public static final char WHITE = 'W'; // displays 'W' for the white player.
-	public static final char CANSELECT = '*'; // displays '*' for the possible moves available.
+	public static final char BLACK = 'B'; // displays 'B' for the black player
+	public static final char WHITE = 'W'; // displays 'W' for the white player
+	public static final char CANSELECT = '*'; // displays '*' for possible valid moves
 
-	public boolean empty; // boolean if cell empty or not
-	public boolean canselect; // boolean if cell can be selected or not
+	public boolean empty; // if cell is empty or not
+	public boolean canselect; // if cell can be selected or not
 
-	public int value; // 0 = white, 1 = black, -1 = empty
+	public int value; // empty = -1 , white = 0 , black = 1
 
 	/**
 	 * Class constructor. Cell is empty by default.
@@ -60,7 +60,7 @@ public class Cell {
 		return this.canselect;
 	}
 	/**
-	 * Makes the cell unselectable
+	 * Makes the cell not selectable
 	 */
 	public void unselect() {
 		this.canselect = false;
@@ -72,9 +72,9 @@ public class Cell {
 		if (this.isEmpty()) // if cell empty
 		{
 			if (this.canselect) // if can be selected
-				System.out.print("[ " + CANSELECT + " ]"); // print '*'
+				System.out.print("[ " + CANSELECT + " ]"); // prints *
 			else
-				System.out.print("[ " + " " + " ]"); // print empty space
+				System.out.print("[ " + " " + " ]"); // print empty spaces for empty cells
 		} else {
 			char content = BLACK;
 			if (this.value == 0)

@@ -22,32 +22,33 @@ public class Driver {
 	 */
 	public void startGame() throws IOException {
 
-		int who = this.initPlayers(); // initializes the first player
-		this.turn = new Turn((who + 1) % 2); // initializes the turn
+		int who = this.initPlayers(); 
+		this.turn = new Turn((who + 1) % 2); 
 
 		for (int i = 0; i < 2; i++) { // asks players for their names
 			System.out.print("Player " + (i + 1) + " ");
 			players[i].setNames();
 		}
 
-		System.out.println(players[0].getName() + " moves"); // indicates whose turn it is
+		System.out.println(players[0].getName() + " moves"); // indicates players turn
 		this.players[turn.getTurn()].findCanSelect(); 
 		board.display(); // displays board
 		
 		while (!board.gameOver()) { // find possible moves when game not over
 
 			int count = 0; // count of possible moves
-			for (int j = 0; j < Board.num; j++)// search the entire board
-				for (int i = 0; i < Board.num; i++)
-					if (board.findLegalMoveNew(new Move(i, j), turn.getTurn()) == true) {
+			for (int row = 0; row < Board.num; row++){// search the entire board
+				for (int col = 0; col < Board.num; col++){
+					if (board.findLegalMove(new Move(row, col), turn.getTurn()) == true) {//find valid moves
 						count++; // add a possible move to the count
 					}
-
+				}
+			}
 			if (count == 0) { // when no possible moves
-				turn.change(); // change the turn to the other player
-				board.display(); // display the updated board
-				board.scoreDisplay(); //display updated score
-				count = 0; // reset count to 0
+				turn.change(); // switches to other players turn
+				board.display(); // prints the updated board
+				board.scoreDisplay(); //prints updated score
+				count = 0; // reset possible moves to 0
 			}
 
 			else {
@@ -55,8 +56,8 @@ public class Driver {
 				int col = this.getCol(); 
 
 				Move move = new Move(row, col); // creates a new move
-				if (board.canSelect(move)) { // if move valid
-					this.players[turn.getTurn()].placeChip(row, col); // place the chip
+				if (board.canSelect(move)) { // if valid move
+					this.players[turn.getTurn()].placeChip(row, col); // place and replace the chip
 					turn.change(); // change the turn to the other player
 				}
 
